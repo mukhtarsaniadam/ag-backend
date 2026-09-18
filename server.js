@@ -39,8 +39,12 @@ app.get('/',(req, res) => res.json({status: 'AG Backend Running', wallet: '/api/
 
 app.post('/api/wallet/init', async (req, res) => {
    try {
-    const{ email, amount } = req.body;
-    if (!email || !amount) return res.status(400).json({ error: 'email and amount required'});
+    const amount = req.body.amount;
+    const email = req.body.email || req.user?.email || "agcustomer@gmail.com"
+    if(!amount) return res.status(400).json({ message: "Amount is required"});
+    if (!email) return res.status(400).json({ message: "Email is required"});
+
+    console.log("Funding:", email, amount);
         
     const response = await axios.post('https://api.paystack.co/transaction/initialize',{
         email,
@@ -56,7 +60,7 @@ app.post('/api/wallet/init', async (req, res) => {
 
    }
 
-});
+});S
 app.get('/api/wallet/verify/:reference',async (req, res) =>{
     try {
 const r = await axios.get('https://api.paystack.co/transaction/verify/${req.params.reference}', {
