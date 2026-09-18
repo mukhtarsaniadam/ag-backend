@@ -90,8 +90,8 @@ app.post('/api/buy/data', async (req, res) => {
         let wallets = getWallets();
         const balance = wallets[email] || 0;
 
-        const plansRes = await axios.get('${CLOB_BASE}/data/plans', {
-            headers: { Authorization: 'Token ${CLOB_API_KEY}'}
+        const plansRes = await axios.get(CLOB_BASE + '/data/plans', {
+            headers: { Authorization: ' Token ' + CLOB_API_KEY}
         });
         let price = 0;
         const allPlans = plansRes.data.data || plansRes.data;
@@ -103,12 +103,12 @@ app.post('/api/buy/data', async (req, res) => {
         wallets[email] = balance - price;
         saveWallets(wallets);
 
-        const buyRes = await axios.post('${CLOB_BASE}/data/',{
+        const buyRes = await axios.post( CLOB_BASE + '/data/',{
             network: network,
             plan: plan_id,
             phone: phone
         }, {
-            headers: { Authorization: 'Token ${CLOB_API_KEY}'}
+            headers: { Authorization: ' Token ' + CLOB_API_KEY }
         });
 
 
@@ -131,18 +131,16 @@ app.post('/api/buy/airtime', async (req, res) => {
         const { email, network, phone, amount } = req.body;
             let wallets = getWallets();
             const balance = wallets[email] || 0;
-
-            if (balance < amount) return res.status(400).json({error: 'insufficient balance. You have ${balance}'})
             
                 wallets[email] = balance - amount;
                 saveWallets(wallets);
 
-                const buyRes = await axios.post('${CLOB_BASE}/airtime/', {
+                const buyRes = await axios.post( CLOB_BASE + '/airtime/', {
                     network: network,
                     phone: phone,
                     amount: amount
                 }, {
-                    headers: {Authorization: 'Token ${CLOB_API_KEY}'}
+                    headers: { Authorization: ' Token ' + CLOB_API_KEY }
                 });
 
                 saveTransactions({ type: 'airtime', email, network, phone, amount, response: buyRes.data, date: new Date()});
@@ -154,8 +152,8 @@ app.post('/api/buy/airtime', async (req, res) => {
 });
 app.get('/api/plans', async (req, res) =>{
    try {
-    const r = await axios.get('${CLOB_BASE}/data/plans', {
-      headers: {Authorization: 'Token ${CLOB_API_KEY}'}
+    const r = await axios.get( CLOB_BASE + '/data/plans', {
+      headers: {Authorization: ' Token ' + CLOB_API_KEY }
     });
     res.json(r.data);
    } catch (e) {
