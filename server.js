@@ -167,6 +167,8 @@ app.get('/api/plans', async (req, res) =>{
 
 
 const PORT = process.env.PORT || 3000;
-app.lsten(PORT, () => console.log('AG Backend Running on ' + PORT));
 
+if(require.main === module){
+app.lsten(PORT, () => console.log('AG Backend Running on ' + PORT));
+}
 module.exports = app;
