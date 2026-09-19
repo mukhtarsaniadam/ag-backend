@@ -111,5 +111,9 @@ app.post('/api/buy', async (req, res) => {
   }
 });
 
-app.listen(PORT, () => console.log(`Running on ${PORT}`));
+if (!process.env.VERCEL){
+    app.listen(PORT, () => {
+        console.log(`Server running on port ${PORT}`);
+    });
+}
 module.exports = app;
