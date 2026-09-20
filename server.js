@@ -28,11 +28,11 @@ function saveWallets(wallets) {
 
 // Home
 app.get('/', (req, res) => {
-  res.json({ status: "AG Backend Running", time: new Date().toISOString() });
+  res.json([ status: "AG Backend Running", time: new Date().toISOString() ]);
 });
 
 // Get plans
-app.get('/api/plans', async (req, res) => {
+app.get('/api/data', async (req, res) => {
   try {
     const resp = await axios.get(`${CLOB_BASE}/plans`, {
       headers: { 'Authorization': CLOB_API_KEY }
