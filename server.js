@@ -34,7 +34,7 @@ app.get('/', (req, res) => {
 // Get plans
 app.get('/api/data', async (req, res) => {
   try {
-    const resp = await axios.get(`${CLOB_BASE}/plans`, {
+    const USER_ID = process.env.CLOB_USER_I(`${CLOB_BASE}/plans`, {
       headers: { 'Authorization': CLOB_API_KEY }
     });
     res.json(resp.data);
